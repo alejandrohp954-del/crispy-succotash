@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Artista - rawrakuma</title>
+    <!-- Carga de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: #3a0ca3;
+        }
+        /* Navegador */
+        nav {
+            background-color: #d6bcfa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav a {
+            color: #3a0ca3;
+            text-decoration: none;
+            margin: 5px 15px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover {
+            color: #6f42c1;
+        }
+
+        /* Tooltip en Nav */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 130px;
+            background-color: #3a0ca3;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: normal;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* ==================== SECCIÓN ARTISTA ==================== */
+        .artista-section {
+            max-width: 1000px;
+            margin: 50px auto 80px auto;
+            padding: 0 20px;
+        }
+        .artista-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .artista-header h1 {
+            font-size: 38px;
+            color: #3a0ca3;
+            margin: 0 0 8px 0;
+        }
+        .artista-header h1 span {
+            color: #6f42c1;
+        }
+
+        /* Contenedor Flex: Texto a la izquierda, Imagen a la derecha */
+        .artista-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            background: #fcf9ff;
+            border: 1px solid #d6bcfa;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(214, 188, 250, 0.4);
+        }
+        .artista-info {
+            flex: 1;
+        }
+        .artista-info h2 {
+            font-size: 28px;
+            color: #3a0ca3;
+            margin-top: 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .artista-info h2 span {
+            color: #6f42c1;
+        }
+        .artista-info p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        /* Cuadro de la imagen del artista a la derecha */
+        .artista-img-box {
+            flex-shrink: 0;
+            width: 320px;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #d6bcfa;
+            box-shadow: 0 6px 15px rgba(58, 12, 163, 0.15);
+            background-color: #1a162b;
+        }
+        .artista-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(58,12,163,0.8), rgba(107,22,155,0.5));
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        footer .redes {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        footer .redes a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 28px;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        footer .redes a:hover {
+            color: #f5c4f9;
+            transform: scale(1.15);
+        }
+        footer small {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Adaptabilidad Móvil */
+        @media (max-width: 850px) {
+            .artista-container {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 25px;
+            }
+            .artista-img-box {
+                width: 100%;
+                max-width: 280px;
+                height: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navegador -->
+<nav>
+    <a href="index.html">Inicio</a>
+      <a href="arte.html">Servicios</a>
+    <a href="#contacto">Contacto</a>
+    
+    <div class="tooltip-container">
+        <a href="https://paypal.me/Alejandro3102" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-paypal"></i> Donar
+        </a>
+        <span class="tooltip-text">¿me puede donar?</span>
+    </div>
+</nav>
+
+<!-- Sección de Artista -->
+<section class="artista-section">
+    <div class="artista-header">
+        <h1>Información del artista<span>.</span></h1>
+    </div>
+
+    <div class="artista-container">
+        <!-- Texto descriptivo (Sobre mí) a la izquierda -->
+        <div class="artista-info">
+            <h2>Sobre mí<span>.</span></h2>
+            <p>
+                ¡Hola! Soy rawrakuma, una apasionada del dibujo y la creación de mundos visuales. Me encanta dar vida a personajes únicos, experimentar con distintos estilos artísticos y plasmar ideas creativas en cada ilustración.
+            </p>
+            <p>
+                Llevo tiempo perfeccionando mis trazos y disfrutando de este hermoso camino del arte digital. Si tienes algún proyecto o idea en mente, estaré encantada de ayudarte a hacerlo realidad.
+            </p>
+        </div>
+
+        <!-- Cuadro con la imagen del artista a la derecha -->
+        <div class="artista-img-box">
+            <img src="imagenes/artista.jpg" alt="Foto del artista" />
+        </div>
+    </div>
+</section>
+
+<!-- Pie de página (Contacto) -->
+<footer id="contacto">
+    <div class="redes">
+        <a href="https://www.instagram.com/by_akuma/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://x.com/Rawr_Akuma" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://discord.gg/e7ZDTX3M" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <i class="fa-brands fa-discord"></i>
+        </a>
+    </div>
+    <small>derechos de autor protegidos y reservados por rawrakuma</small>
+</footer>
+
+</body>
+</html>

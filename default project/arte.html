@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Servicios y Arte - rawrakuma</title>
+    <!-- Carga de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: #3a0ca3;
+        }
+        /* Navegador */
+        nav {
+            background-color: #d6bcfa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav a {
+            color: #3a0ca3;
+            text-decoration: none;
+            margin: 5px 15px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        nav a:hover {
+            color: #6f42c1;
+        }
+
+        /* Tooltip en Nav */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 130px;
+            background-color: #3a0ca3;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: normal;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Encabezado Servicios */
+        .servicios-header {
+            text-align: center;
+            margin: 40px 20px 20px 20px;
+        }
+        .servicios-header h1 {
+            font-size: 36px;
+            color: #3a0ca3;
+            margin: 0 0 10px 0;
+        }
+        .servicios-header h1 span {
+            color: #6f42c1;
+        }
+        .servicios-descripcion {
+            font-size: 18px;
+            color: #555;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Contenedor principal Servicios */
+        .main-servicios-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 30px auto 50px auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Carrusel Adaptativo */
+        .carousel-container {
+            position: relative;
+            width: 500px;
+            height: 330px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(214, 188, 250, 0.7);
+            background-color: #1a162b;
+            flex-shrink: 0;
+        }
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .carousel-slide.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Botones del carrusel */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(58, 12, 163, 0.3);
+            backdrop-filter: blur(4px);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .carousel-btn:hover, .carousel-btn:active {
+            background-color: rgba(58, 12, 163, 0.85);
+            color: white;
+            box-shadow: 0 0 10px rgba(58, 12, 163, 0.5);
+        }
+        .prev-btn { left: 15px; }
+        .next-btn { right: 15px; }
+
+        /* Botones laterales rectangulares */
+        .sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 250px;
+        }
+        .btn-comision {
+            background-color: #d6bcfa;
+            color: #3a0ca3;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-comision:hover {
+            background-color: #c4a1f7;
+            transform: translateY(-2px);
+        }
+
+        /* ==================== SECCIÓN DE ARTE ==================== */
+        #seccion-arte {
+            padding: 50px 20px;
+            background-color: #fcfbfe;
+            border-top: 2px solid #f0e6ff;
+        }
+        .arte-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .arte-header h2 {
+            font-size: 38px;
+            color: #3a0ca3;
+            margin: 0 0 8px 0;
+        }
+        .arte-header h2 span {
+            color: #6f42c1;
+        }
+        .arte-header p {
+            font-size: 16px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Grid de 4 tarjetas de arte */
+        .arte-cards-grid {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .arte-card {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 240px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f0e8ff;
+            position: relative;
+        }
+        .arte-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.18);
+        }
+        .arte-card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+        .arte-card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .arte-card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            margin: 0 0 8px 0;
+            text-transform: lowercase;
+        }
+        .arte-card-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0 0 18px 0;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+        .btn-ver-mas {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-ver-mas:hover {
+            background-color: #1d4ed8;
+            transform: scale(1.03);
+        }
+
+        /* Insignia +18 en la tarjeta con restricción */
+        .badge-18 {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc2626;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* --- Estilos Avanzados de Modales --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            position: relative;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content h2 {
+            color: #3a0ca3;
+            margin-top: 0;
+            font-size: 26px;
+            border-bottom: 2px solid #f0e6ff;
+            padding-bottom: 10px;
+        }
+        
+        /* Modal de Advertencia de Edad */
+        .modal-edad {
+            max-width: 450px !important;
+            border: 2px solid #dc2626;
+        }
+        .modal-edad h2 {
+            color: #dc2626;
+            border-bottom: 2px solid #fecaca;
+        }
+        .icon-18-warning {
+            font-size: 45px;
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+        .botones-confirmacion {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .btn-confirmar {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-confirmar:hover {
+            background-color: #15803d;
+        }
+        .btn-denegar {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-denegar:hover {
+            background-color: #b91c1c;
+        }
+
+        /* Grid de 2 columnas para precios */
+        .precios-grid-2col {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .precio-columna {
+            flex: 1;
+            background: #fcf9ff;
+            border: 1px solid #d6bcfa;
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(214, 188, 250, 0.3);
+        }
+        .precio-columna h3 {
+            margin-top: 0;
+            color: #6f42c1;
+            font-size: 18px;
+            border-bottom: 1px solid #d6bcfa;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+        .precio-columna ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .precio-columna ul li {
+            padding: 6px 0;
+            font-size: 15px;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #eee;
+        }
+        .precio-columna ul li span {
+            font-weight: bold;
+            color: #3a0ca3;
+        }
+
+        /* Galería de imágenes dentro del modal */
+        .modal-imagenes-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 25px 0 15px 0;
+        }
+        .modal-imagenes-grid img {
+            width: 160px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #d6bcfa;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .modal-imagenes-grid img:hover {
+            transform: scale(1.04);
+        }
+
+        /* Nota/Aviso en la parte inferior */
+        .aviso-monto {
+            background-color: #f3ebfc;
+            border-left: 4px solid #6f42c1;
+            color: #3a0ca3;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin: 15px 0 20px 0;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        /* Secciones de Términos */
+        .lista-reglas {
+            text-align: left;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .lista-reglas.si {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+        .lista-reglas.no {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+        .lista-reglas h3 {
+            margin-top: 0;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lista-reglas.si h3 { color: #166534; }
+        .lista-reglas.no h3 { color: #991b1b; }
+
+        .lista-reglas ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #333;
+        }
+        .lista-reglas ul li {
+            margin-bottom: 6px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .close-modal-btn {
+            background-color: #3a0ca3;
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .close-modal-btn:hover {
+            background-color: #520fc8;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(58,12,163,0.8), rgba(107,22,155,0.5));
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        footer .redes {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        footer .redes a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 28px;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        footer .redes a:hover {
+            color: #f5c4f9;
+            transform: scale(1.15);
+        }
+        footer small {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Imagen secreta / extra al fondo del todo */
+        .footer-secret-container {
+            background-color: #25184a;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-secret-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #d6bcfa;
+            opacity: 0.7;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .footer-secret-img:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Adaptabilidad Móvil */
+        @media (max-width: 850px) {
+            .main-servicios-container {
+                flex-direction: column;
+            }
+            .carousel-container {
+                width: 100%;
+                max-width: 400px;
+                height: 270px;
+            }
+            .sidebar-buttons {
+                width: 100%;
+                max-width: 400px;
+            }
+            .precios-grid-2col {
+                flex-direction: column;
+            }
+            .modal-imagenes-grid img {
+                width: 110px;
+                height: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navegador -->
+<nav>
+    <a href="index.html">Inicio</a>
+    <a href="artista.html">Artista</a>
+    <a href="#contacto">Contacto</a>
+    
+    <div class="tooltip-container">
+        <a href="https://www.paypal.me/tu_usuario_paypal" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-paypal"></i> Donar
+        </a>
+        <span class="tooltip-text">¿me puede donar?</span>
+    </div>
+</nav>
+
+<!-- Encabezado de la página -->
+<div class="servicios-header">
+    <h1>Arte y servicio<span>.</span></h1>
+    <p class="servicios-descripcion">
+        Aquí realizo ilustraciones personalizadas, diseño de personajes y proyectos visuales adaptados a tus ideas. Explora los botones de la derecha para conocer los detalles y tarifas de cada estilo.
+    </p>
+</div>
+
+<!-- Contenedor Principal: Carrusel + Botones de Comisión -->
+<div class="main-servicios-container">
+    
+    <!-- Carrusel Adaptativo -->
+    <div class="carousel-container">
+        <div class="carousel-slide active">
+            <img src="carrusel/1.png" alt="Arte 1" />
+        </div>
+        <div class="carousel-slide">
+            <img src="carrusel/2.png" alt="Arte 2" />
+        </div>
+        <div class="carousel-slide">
+            <img src="carrusel/3.png" alt="Arte 3" />
+        </div>
+        <div class="carousel-slide">
+            <img src="carrusel/4.png" alt="Arte 4" />
+        </div>
+        <div class="carousel-slide">
+            <img src="carrusel/5.jpg" alt="Arte 5" />
+        </div>
+
+        <button class="carousel-btn prev-btn" onclick="cambiarSlide(-1)">❮</button>
+        <button class="carousel-btn next-btn" onclick="cambiarSlide(1)">❯</button>
+    </div>
+
+    <!-- 4 Botones de Comisiones -->
+    <div class="sidebar-buttons">
+        <button class="btn-comision" onclick="abrirModal('modal-estilo-1')">Estilo 1</button>
+        <button class="btn-comision" onclick="abrirModal('modal-estilo-2')">Estilo 2</button>
+        <button class="btn-comision" onclick="abrirModal('modal-estilo-3')">Estilo 3 (Lineart)</button>
+        <button class="btn-comision" onclick="abrirModal('modal-terminos')">Términos de comisión</button>
+    </div>
+
+</div>
+
+<!-- ==================== SECCIÓN DE ARTE ==================== -->
+<section id="seccion-arte">
+    <div class="arte-header">
+        <h2>Arte<span>.</span></h2>
+        <p>ejemplos apartes de cada estilo</p>
+    </div>
+
+    <!-- 4 Cuadros de Arte individuales -->
+    <div class="arte-cards-grid">
+        
+        <div class="arte-card">
+            <img src="imagenes/icondedany.png" alt="Estilo 1" class="arte-card-img" />
+            <div class="arte-card-body">
+                <h3 class="arte-card-title">estilo 1</h3>
+                <p class="arte-card-desc">primer estilo que manejo en comisiones y dibujos</p>
+                <button class="btn-ver-mas" onclick="abrirModal('modal-arte-1')">Ver más</button>
+            </div>
+        </div>
+
+        <div class="arte-card">
+            <img src="imagenes/ne.png" alt="Estilo 2" class="arte-card-img" />
+            <div class="arte-card-body">
+                <h3 class="arte-card-title">Estilo 2</h3>
+                <p class="arte-card-desc">segundo estilo que manejo en comisiones y dibujos</p>
+                <button class="btn-ver-mas" onclick="abrirModal('modal-arte-2')">Ver más</button>
+            </div>
+        </div>
+
+        <div class="arte-card">
+            <img src="imagenes/LineartXeroderma.png" alt="Estilo 3" class="arte-card-img" />
+            <div class="arte-card-body">
+                <h3 class="arte-card-title">Estilo 3</h3>
+                <p class="arte-card-desc">Tercer estilo que manejo en comisiones y dibujos</p>
+                <button class="btn-ver-mas" onclick="abrirModal('modal-arte-3')">Ver más</button>
+            </div>
+        </div>
+
+        <!-- Tarjeta Estilo 4 con Bloqueo de Edad (+18) -->
+        <div class="arte-card">
+            <span class="badge-18">+18</span>
+            <img src="imagenes/Captura%20de%20pantalla%202026-11-03%20183206.png" alt="Estilo 4" class="arte-card-img" />
+            <div class="arte-card-body">
+                <h3 class="arte-card-title">NSWF </h3>
+                <p class="arte-card-desc">contenido exclusivo para mayores de edad</p>
+                <button class="btn-ver-mas" onclick="solicitarVerificacionEdad()">Ver más</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==================== MODAL DE CONFIRMACIÓN DE EDAD (+18) ==================== -->
+<div class="modal-overlay" id="modal-verificacion-edad">
+    <div class="modal-content modal-edad">
+        <div class="icon-18-warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2>Contenido Sensible (+18)</h2>
+        <p style="color:#444; font-size:15px; line-height:1.5;">
+            Esta sección contiene imágenes o material exclusivo para adultos. Por favor confirma que eres mayor de edad para continuar.
+        </p>
+        
+        <div class="botones-confirmacion">
+            <button class="btn-confirmar" onclick="confirmarEdadMayor()">Sí, soy mayor de 18</button>
+            <button class="btn-denegar" onclick="denegarEdadMenor()">No, soy menor</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODALES DE COMISIONES ==================== -->
+
+<div class="modal-overlay" id="modal-estilo-1">
+    <div class="modal-content">
+        <h2>Precios de Comisión: Estilo 1</h2>
+        <div class="precios-grid-2col">
+            <div class="precio-columna">
+                <h3>Full Color</h3>
+                <ul>
+                    <li>Cuerpo completo <span>40 dls</span></li>
+                    <li>Mitad de cuerpo <span>35 dls</span></li>
+                    <li>Hombro hacia arriba <span>30 dls</span></li>
+                </ul>
+            </div>
+            <div class="precio-columna">
+                <h3>Color Base</h3>
+                <ul>
+                    <li>Cuerpo completo <span>25 dls</span></li>
+                    <li>Mitad de cuerpo <span>20 dls</span></li>
+                    <li>Hombro hacia arriba <span>15 dls</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/1.png" alt="Ejemplo 1A2" />
+            <img src="imagenes/2.png" alt="Ejemplo 1B" />
+            <img src="imagenes/3.png" alt="Ejemplo 1C" />
+        </div>
+        <div class="aviso-monto">
+            <i class="fa-solid fa-circle-info"></i> Cualquier añadido como fondos u personajes extra dependiendo de la complejidad se discutirá el monto.
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-estilo-1')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-estilo-2">
+    <div class="modal-content">
+        <h2>Precios de Comisión: Estilo 2</h2>
+        <div class="precios-grid-2col">
+            <div class="precio-columna">
+                <h3>Full Color</h3>
+                <ul>
+                    <li>Cuerpo completo <span>25 dls</span></li>
+                    <li>Mitad de cuerpo <span>20 dls</span></li>
+                    <li>Hombro hacia arriba <span>15 dls</span></li>
+                </ul>
+            </div>
+            <div class="precio-columna">
+                <h3>Color Base</h3>
+                <ul>
+                    <li>Cuerpo completo <span>10 dls</span></li>
+                    <li>Mitad de cuerpo <span>8 dls</span></li>
+                    <li>Hombro hacia arriba <span>5 dls</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/AleXero2.jpg" alt="Ejemplo 2A" />
+            <img src="imagenes/AleXero1.jpg" alt="Ejemplo 2B" />
+            <img src="imagenes/AlbedoYunBabaLineart.png" alt="Ejemplo 2C" />
+        </div>
+        <div class="aviso-monto">
+            <i class="fa-solid fa-circle-info"></i> Cualquier añadido como fondos u personajes extra dependiendo de la complejidad se discutirá el monto.
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-estilo-2')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-estilo-3">
+    <div class="modal-content">
+        <h2>Precios de Comisión: Estilo 3 (Lineart)</h2>
+        <p style="color:#666; font-size:14px; margin-top:-5px;">Disponible para ambos estilos</p>
+        <div class="precios-grid-2col">
+            <div class="precio-columna" style="flex:1; max-width: 320px; margin: 0 auto;">
+                <h3>Lineart</h3>
+                <ul>
+                    <li>Cuerpo completo <span>5 dls</span></li>
+                    <li>Mitad de cuerpo <span>3 dls</span></li>
+                    <li>Hombro hacia arriba <span>1 dls</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/2a398fc15fda7a50f45edd4bde1a9c4ae.png" alt="Lineart 1" />
+            <img src="imagenes/xd.png" alt="Lineart 2" />
+            <img src="imagenes/emotetamal2.png" alt="Lineart 3" />
+        </div>
+        <div class="aviso-monto">
+            <i class="fa-solid fa-circle-info"></i> Cualquier añadido como fondos u personajes extra dependiendo de la complejidad se discutirá el monto.
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-estilo-3')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-terminos">
+    <div class="modal-content">
+        <h2>Términos de comisión</h2>
+        <h4 style="color:#3a0ca3; text-align:left; margin-bottom:5px;">Resumen de Tarifas:</h4>
+        <div style="font-size: 13px; text-align:left; background:#f9f5ff; padding:12px; border-radius:8px; border:1px solid #e9dcfc; margin-bottom:15px;">
+            <strong>Estilo 1:</strong> Full Color ($40/$35/$30 dls) | Color Base ($25/$20/$15 dls)<br>
+            <strong>Estilo 2:</strong> Full Color ($25/$20/$15 dls) | Color Base ($10/$8/$5 dls)<br>
+            <strong>Lineart (Ambos estilos):</strong> Cuerpo completo ($5 dls) | Mitad ($3 dls) | Hombro ($1 dls)
+        </div>
+        <div class="aviso-monto" style="margin-top:0;">
+            Cualquier añadido como fondos u personajes extra dependiendo de la complejidad se discutirá el monto.
+        </div>
+        <div class="lista-reglas si">
+            <h3><i class="fa-solid fa-circle-check"></i> Lo que sí sé hacer:</h3>
+            <ul>
+                <li>Humanos o semihumanos, ya sean como nekomatas o un demonio.</li>
+                <li>Fondos al estilo de un Manhwa.</li>
+                <li>Cualquier estilo de ropa.</li>
+                <li>Tanto personajes femeninos como masculinos.</li>
+                <li>Cualquier objeto que se necesite en la comisión que se pida para el personaje.</li>
+                <li>Niños, ancianos, adolescentes y adultos.</li>
+                <li>Chibi.</li>
+                <li>NSFW.</li>
+            </ul>
+        </div>
+        <div class="lista-reglas no">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Lo que no sé hacer o de plano no acepto:</h3>
+            <ul>
+                <li>Imágenes medianamente explícitas con esa connotación que tenga que ver con menores de edad o de apariencia similar.</li>
+                <li>Furrys.</li>
+            </ul>
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-terminos')">Cerrar</button>
+    </div>
+</div>
+
+<!-- ==================== MODALES INDIVIDUALES DE ARTE ==================== -->
+
+<div class="modal-overlay" id="modal-arte-1">
+    <div class="modal-content">
+        <h2>Detalles: Estilo 1</h2>
+        <p>Muestras e ilustraciones de este estilo.</p>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/1.png" alt="Detalle 1" />
+            <img src="imagenes/2.png" alt="Detalle 2" />
+            <img src="imagenes/3.png" alt="Detalle 3" />
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-arte-1')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-arte-2">
+    <div class="modal-content">
+        <h2>Detalles: Estilo 2</h2>
+        <p>Muestras e ilustraciones de este estilo.</p>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/estil0p1.23.png" alt="Detalle 1" />
+            <img src="imagenes/estil0p2.1.png" alt="Detalle 2" />
+            <img src="imagenes/estil0p2.png" alt="Detalle 3" />
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-arte-2')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-arte-3">
+    <div class="modal-content">
+        <h2>Detalles: Estilo 3</h2>
+        <p>Muestras e ilustraciones de este estilo.</p>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/lineart1.png" alt="Detalle 1" />
+            <img src="imagenes/lineart2.png" alt="Detalle 2" />
+            <img src="imagenes/lineart3.png" alt="Detalle 3" />
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-arte-3')">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal Arte 4 (Protegido con verificación) -->
+<div class="modal-overlay" id="modal-arte-4">
+    <div class="modal-content">
+        <h2>Detalles: NSFW (+18)</h2>
+        <p>Ilustraciones y contenido exclusivo para adultos.</p>
+        <div class="modal-imagenes-grid">
+            <img src="imagenes/nsfw2.png" alt="Detalle 1" />
+            <img src="imagenes/nsfw3.png" alt="Detalle 2" />
+            <img src="imagenes/Comission_NSFW1.png" alt="Detalle 3" />
+        </div>
+        <button class="close-modal-btn" onclick="cerrarModal('modal-arte-4')">Cerrar</button>
+    </div>
+</div>
+
+<!-- Pie de página (Contacto) -->
+<footer id="contacto">
+    <div class="redes">
+        <a href="https://www.instagram.com/by_akuma/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://x.com/Rawr_Akuma" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://discord.gg/e7ZDTX3M" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+            <i class="fa-brands fa-discord"></i>
+        </a>
+    </div>
+    <small>derechos de autor protegidos y reservados por rawrakuma</small>
+</footer>
+
+<!-- Apartado extra al fondo del todo  -->
+<div class="footer-secret-container">
+    <a href="https://youtu.be/Lm-1EzEC8Qc" target="_blank" rel="noopener noreferrer" title="¡Sorpresa!">
+        <img src="imagenes/concurso-100-seguidores1.png" alt="Easter Egg" class="footer-secret-img" />
+    </a>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // Lógica del Carrusel
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    let slideInterval;
+
+    function mostrarSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    function cambiarSlide(n) {
+        mostrarSlide(currentSlide + n);
+        reiniciarTemporizador();
+    }
+
+    function iniciarTemporizador() {
+        slideInterval = setInterval(() => {
+            mostrarSlide(currentSlide + 1);
+        }, 5000);
+    }
+
+    function reiniciarTemporizador() {
+        clearInterval(slideInterval);
+        iniciarTemporizador();
+    }
+
+    iniciarTemporizador();
+
+    // Lógica para abrir/cerrar Modales
+    function abrirModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) {
+            modal.style.display = 'flex';
+        }
+    }
+
+    function cerrarModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // --- VERIFICACIÓN DE EDAD PARA EL ESTILO 4 ---
+    
+    // URL del Rickroll para menores de edad (y también aplicable si lo deseas)
+    const URL_VIDEO_REDIRECCION = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; 
+
+    function solicitarVerificacionEdad() {
+        abrirModal('modal-verificacion-edad');
+    }
+
+    function confirmarEdadMayor() {
+        cerrarModal('modal-verificacion-edad');
+        abrirModal('modal-arte-4'); // Abre el modal de arte estilo 4 tras confirmar
+    }
+
+    function denegarEdadMenor() {
+        // Redirige al video de rickroll
+        window.location.href = URL_VIDEO_REDIRECCION; 
+    }
+
+    // Cierre de cuadros al hacer clic fuera del contenido
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal-overlay')) {
+            // Evita cerrar el aviso de edad haciendo clic afuera
+            if(event.target.id !== 'modal-verificacion-edad') {
+                event.target.style.display = 'none';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
